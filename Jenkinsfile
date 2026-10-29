@@ -11,10 +11,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Downloading code from GitHub'
-
-                git branch: 'main',
-                    url: 'https://github.com/vishal2-jpg/jenkins-git-demo.git'
+                echo 'Code downloaded from GitHub'
+                sh 'git log -1 --oneline'
             }
         }
 
@@ -29,25 +27,19 @@ pipeline {
             steps {
                 echo 'Testing HTML file'
                 sh 'test -f index.html'
-                echo 'HTML file exists. Test passed!'
+                echo 'HTML test passed!'
             }
         }
 
         stage('Check HTML') {
             steps {
-                echo 'Checking HTML file contents'
-
-                sh '''
-                    echo "HTML file details:"
-                    ls -lh index.html
-                    cat index.html
-                '''
+                echo 'Displaying HTML content'
+                sh 'cat index.html'
             }
         }
 
         stage('Package') {
             steps {
-                echo 'Packaging application'
                 sh 'tar -czf html-project.tar.gz index.html'
                 echo 'Package created successfully!'
             }
